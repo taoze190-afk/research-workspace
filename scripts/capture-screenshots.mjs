@@ -112,11 +112,11 @@ try {
   await start.dispose();
   await page.waitForSelector('#main-content');
   for (const [name, route] of [
-    ['dashboard', '/'],
-    ['ai-studio', '/ai'],
+    ['dashboard-initial', '/'],
+    ['ai-studio-initial', '/ai'],
   ]) {
     await page.goto(base + route, { waitUntil: 'networkidle0' });
-    await page.waitForSelector(name === 'dashboard' ? 'nav[aria-label="概览"]' : 'textarea[aria-label="向 AI 提问"]');
+    await page.waitForSelector(name === 'dashboard-initial' ? 'nav[aria-label="概览"]' : 'textarea[aria-label="向 AI 提问"]');
     await verifyCleanPage(page);
     await pause(250);
     await page.screenshot({ path: path.join(output, name + '.png') });

@@ -8,7 +8,7 @@
 
 AI 可以读取选定的研究资料、分析明确附带的文件，并提出可预览、可采纳的记录变更。正式记录保留在各业务模块中，采纳结果后可继续跟进。
 
-![科研工作台初始界面](docs/images/dashboard.png)
+![科研工作台初始界面](docs/images/dashboard-initial.png)
 
 ## 功能
 
@@ -34,7 +34,7 @@ AI 可以读取选定的研究资料、分析明确附带的文件，并提出�
 - 全局副驾驶转入工作室时接续讨论、草稿和操作状态。
 - 支持 DeepSeek、Gemini、智谱、Kimi 与兼容接口；模型服务和密钥由使用者自行配置。
 
-![AI 工作室初始界面](docs/images/ai-studio.png)
+![AI 工作室初始界面](docs/images/ai-studio-initial.png)
 
 当前没有云端会话同步、文件全文向量检索或后台长任务。对话与回执按账号保存在当前浏览器；文件正文在明确附带后读取。详细设计见 [AI 联动方案](docs/ai-research-workbench-plan.md)。
 
