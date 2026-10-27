@@ -1,0 +1,25 @@
+.toast-viewport {
+  pointer-events: none;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.toast-item {
+  pointer-events: auto;
+}
+.toast-action,
+.toast-close {
+  pointer-events: auto;
+}
+.toast-item > div {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 767px) {
+  .toast-viewport {
+    top: calc(8px + env(safe-area-inset-top));
+    width: min(340px, calc(100vw - 88px));
+  }
+  .toast-item {
+    padding-block: 10px;
+  }
+}

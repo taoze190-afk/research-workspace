@@ -1,0 +1,94 @@
+.workspace-shell {
+  position: relative;
+  isolation: isolate;
+}
+.workspace-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.workspace-backdrop img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 65%;
+  filter: saturate(0.7);
+  position: absolute;
+  inset: 0;
+  transition: opacity 400ms ease;
+}
+/* 浅色主题看雾山，深色主题看海岸夜景；两张都在 DOM，靠主题显隐 */
+.workspace-bg-dark { opacity: 0; }
+:root[data-theme='dark'] .workspace-bg-dark { opacity: 1; }
+:root[data-theme='dark'] .workspace-bg-light { opacity: 0; }
+.workspace-backdrop::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(
+    180deg,
+    rgba(246, 248, 252, 0.84),
+    rgba(246, 248, 252, 0.89) 48%,
+    rgba(246, 248, 252, 0.78)
+  );
+}
+:root[data-theme='dark'] .workspace-backdrop::after {
+  background: linear-gradient(180deg, rgba(12, 19, 32, 0.92), rgba(12, 19, 32, 0.95) 48%, rgba(12, 19, 32, 0.89));
+}
+.workspace-shell .page-count {
+  background: var(--surface);
+}
+.workspace-shell .page-toolbar,
+.workspace-shell .panel,
+.workspace-shell .ai-studio-conversation,
+.workspace-shell .ai-studio-inspector {
+  background-color: var(--surface);
+}
+@media (max-width: 767px) {
+  .workspace-backdrop img {
+    object-position: 58% center;
+  }
+}
+
+/* ---------------------------------------------------------------- 透明玻璃档（bgStyle = glass）
+   背景遮罩大幅减淡让照片透出来；所有承载内容的面变半透明 + 磨砂，
+   深浅主题各配一档玻璃底色与更亮的描边，保证文字对比度不降。 */
+body.bg-style-glass .workspace-backdrop::after {
+  background: linear-gradient(180deg, rgba(246, 248, 252, 0.38), rgba(246, 248, 252, 0.5) 48%, rgba(246, 248, 252, 0.34));
+}
+:root[data-theme='dark'] body.bg-style-glass .workspace-backdrop::after,
+body.bg-style-glass :root[data-theme='dark'] .workspace-backdrop::after {
+  background: linear-gradient(180deg, rgba(10, 17, 30, 0.42), rgba(10, 17, 30, 0.52) 48%, rgba(10, 17, 30, 0.38));
+}
+
+body.bg-style-glass .workspace-shell .panel,
+body.bg-style-glass .workspace-shell .stat-cell,
+body.bg-style-glass .workspace-shell .ai-studio-conversation,
+body.bg-style-glass .workspace-shell .ai-studio-inspector,
+body.bg-style-glass .workspace-shell .settings-nav,
+body.bg-style-glass .app-topbar,
+body.bg-style-glass .sidebar-surface,
+body.bg-style-glass .app-agent {
+  background: var(--surface-glass-panel);
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+}
+body.bg-style-glass .workspace-shell .panel,
+body.bg-style-glass .workspace-shell .stat-cell {
+  border-color: var(--glass-border);
+}
+body.bg-style-glass .seg > button[aria-pressed='true'] {
+  background: var(--surface-glass-panel);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+/* 无背景图时（backgroundImage 关闭），玻璃档改用浓彩色渐变打底，透明感照样成立 */
+body.bg-style-glass:not(:has(.workspace-backdrop)) {
+  background-image: radial-gradient(1000px 520px at 8% -10%, rgba(99, 102, 241, 0.22), transparent 58%),
+    radial-gradient(860px 460px at 100% 0%, rgba(14, 165, 233, 0.18), transparent 55%),
+    radial-gradient(900px 500px at 50% 110%, rgba(236, 72, 153, 0.12), transparent 60%);
+  background-attachment: fixed;
+}

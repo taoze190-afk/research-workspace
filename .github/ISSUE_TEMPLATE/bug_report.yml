@@ -1,0 +1,22 @@
+name: 问题反馈
+description: 提交可复现的问题，请使用合成资料并隐藏密钥。
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: 运行环境
+      description: 版本、操作系统、浏览器，以及纯本地 / 服务端 / Windows 桌面版。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 写出操作步骤、预期行为和实际结果。不要上传真实数据库、模型密钥或个人科研文件。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 截图或日志
+      description: 可选；先移除账号、密钥、Cookie 和研究资料。

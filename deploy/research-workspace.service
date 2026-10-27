@@ -1,0 +1,34 @@
+# 研序服务端 systemd 单元（保活 + 开机自启）。
+# 装法见 docs/deploy-1panel.md 第 4 步。用 1Panel 的「进程守护」也可以，二选一。
+#
+# 前提：机器上已有 Node.js 22.12+ / 24（J1900 上用 x86_64 的官方二进制即可），
+# 且 /opt/research-workspace 下放着 server/ 与 deploy/research-workspace.env。
+
+[Unit]
+Description=研序服务端 (Research Workspace API)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 专用低权限账号；不要用 root 跑常驻服务
+User=rw
+Group=rw
+WorkingDirectory=/opt/research-workspace
+EnvironmentFile=/opt/research-workspace/deploy/research-workspace.env
+ExecStart=/usr/local/bin/node /opt/research-workspace/server/src/main.ts
+Restart=always
+RestartSec=3
+StandardOutput=append:/var/log/research-workspace/out.log
+StandardError=append:/var/log/research-workspace/err.log
+
+# 内存紧的机器（J1900 只有 4GB 且要跑一堆容器）：给进程封顶，超了由内核杀并自动重启
+MemoryMax=256M
+# 只允许往自己的数据目录和日志目录写，其余按只读处理
+ProtectSystem=full
+ReadWritePaths=/opt/research-workspace/data /var/log/research-workspace
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,58 @@
+/* ---------------------------------------------------------------- 星云（Nebula）质感层
+   思路对齐 Linear / Raycast：不用照片，用「大范围低透明度彩色光晕 + 细腻噪点」
+   制造深度。噪点是 feTurbulence 生成的 SVG，data URI 内联，零网络请求。
+   挂在 body 上，pointer-events 关闭，不参与布局。 */
+body.bg-style-nebula::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* 彩色光晕：左上 indigo、右上 cyan、底部 violet，都极淡 */
+  background:
+    radial-gradient(1100px 620px at 6% -12%, rgba(99, 102, 241, 0.16), transparent 62%),
+    radial-gradient(900px 560px at 96% -6%, rgba(6, 182, 212, 0.12), transparent 58%),
+    radial-gradient(1000px 640px at 42% 118%, rgba(139, 92, 246, 0.1), transparent 60%);
+}
+:root[data-theme='dark'] body.bg-style-nebula::before {
+  background:
+    radial-gradient(1100px 620px at 6% -12%, rgba(99, 102, 241, 0.26), transparent 62%),
+    radial-gradient(900px 560px at 96% -6%, rgba(8, 145, 178, 0.2), transparent 58%),
+    radial-gradient(1000px 640px at 42% 118%, rgba(124, 58, 237, 0.16), transparent 60%);
+}
+
+/* 噪点：全局覆盖一层 4% 透明度的颗粒，消除渐变的「塑料感」 */
+body.bg-style-nebula::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  mix-blend-mode: overlay;
+}
+:root[data-theme='dark'] body.bg-style-nebula::after {
+  opacity: 0.08;
+}
+
+/* 星云档的面板：高不透明度（文字绝对优先）+ 轻磨砂 + 顶部 1px 内高光（玻璃厚度感） */
+body.bg-style-nebula .workspace-shell .panel,
+body.bg-style-nebula .workspace-shell .stat-cell,
+body.bg-style-nebula .workspace-shell .ai-studio-conversation,
+body.bg-style-nebula .workspace-shell .ai-studio-inspector,
+body.bg-style-nebula .app-topbar,
+body.bg-style-nebula .sidebar-surface,
+body.bg-style-nebula .app-agent,
+body.bg-style-nebula .settings-nav {
+  background: var(--nebula-panel);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border-color: var(--nebula-border);
+  box-shadow: var(--shadow-card), inset 0 1px 0 var(--nebula-highlight);
+}
+/* 顶栏额外的环境光底缘：一条极细的渐变高光，暗示「光源在上方」 */
+body.bg-style-nebula .app-topbar {
+  box-shadow: inset 0 1px 0 var(--nebula-highlight), 0 1px 0 var(--nebula-border);
+}

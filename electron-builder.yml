@@ -1,0 +1,53 @@
+appId: cn.yanxu.research
+productName: 研序
+electronDist: node_modules/electron/dist
+executableName: YanxuResearch
+directories:
+  app: .desktop-build/app
+  output: release
+  buildResources: .desktop-build
+files:
+  - '!node_modules{,/**/*}'
+  - '!**/node_modules{,/**/*}'
+  - desktop/main.cjs
+  - desktop/runtime.cjs
+  - package.json
+extraResources:
+  - from: .desktop-build/runtime
+    to: runtime
+  - from: .desktop-build/backend
+    to: backend
+  - from: dist
+    to: web
+  - from: .desktop-build/icon.ico
+    to: icon.ico
+  - from: docs/desktop-windows.md
+    to: 桌面版使用说明.md
+asar: true
+compression: normal
+npmRebuild: false
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  icon: .desktop-build/icon.ico
+  signAndEditExecutable: true
+  signExecutable: false
+nsis:
+  artifactName: Yanxu-Setup-${version}-${arch}.exe
+  oneClick: false
+  perMachine: false
+  allowElevation: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 研序
+  deleteAppDataOnUninstall: false
+  runAfterFinish: false
+  installerLanguages: [zh_CN, en_US]
+  language: 2052
+portable:
+  artifactName: Yanxu-Portable-${version}-${arch}.exe
+  requestExecutionLevel: user

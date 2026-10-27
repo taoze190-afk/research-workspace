@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#f8fafc" />
+    <meta name="description" content="研序 · 个人科研工作管理平台" />
+    <title>研序</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      // 首屏防闪白：设置里选了深色，或跟随系统且系统是深色时，先于 CSS 挂上 data-theme
+      (function () {
+        try {
+          var prefs = JSON.parse(localStorage.getItem('rw.prefs.v1') || '{}');
+          var dark = prefs.theme === 'dark' || ((!prefs.theme || prefs.theme === 'system') && matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) {
+            document.documentElement.dataset.theme = 'dark';
+            document.documentElement.style.colorScheme = 'dark';
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#020617');
+          }
+        } catch (e) {
+          /* localStorage 读不了就按浅色走 */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

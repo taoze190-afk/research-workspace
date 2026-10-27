@@ -1,0 +1,16 @@
+name: 功能建议
+description: 描述研究工作中的问题和希望获得的结果。
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 使用场景和现有问题
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 希望如何改进
+      description: 可补充与项目、任务、实验、文献、文件或 AI 工作流的关系。
+    validations:
+      required: true
