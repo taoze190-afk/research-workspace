@@ -11,7 +11,7 @@
 
 ## 设计与实现记录
 
-这些文档记录具体迭代的范围和本机验证，不表示后续路线图已经实现。截图与报告由脚本在 `shots/` 生成，不纳入源码；首页预览图使用合成演示数据。
+这些文档记录具体迭代的范围和本机验证，不表示后续路线图已经实现。验收截图与报告由脚本在 `shots/` 生成，不纳入源码；首页预览图展示空白工作区的初始界面，可通过 `node scripts/capture-screenshots.mjs` 重新生成。
 
 - [AI 工作台与模块联动方案](ai-research-workbench-plan.md)
 - [AI 读写融合](ai-workspace-integration-2026-10-26.md)
